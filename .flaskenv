@@ -1,0 +1,3 @@
+FLASK_ENV=development
+FLASK_APP=urlhunter
+FLASK_DEBUG=1

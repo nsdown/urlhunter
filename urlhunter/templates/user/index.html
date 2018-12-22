@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+    <table class="table table-hover">
+        <tr>
+            <td width="256px"><img src="{{ user.avatar(256) }}"></td>
+            <td>
+            <h1>{{ user.username }}</h1>
+            <p><i class="fa fa-calendar"></i> 于{{ moment(user.member_since).format('LL') }}加入</p>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

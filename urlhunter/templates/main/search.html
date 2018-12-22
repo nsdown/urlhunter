@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% from "macros.html" import urllist with context %}
+{% from "macros.html" import search_form %}
+{% from "macros.html" import exclude_form with context %}
+{% from "macros.html" import output_urls with context %}
+
+{% block title %}搜索结果{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="{% if results %}col-md-8{% else %}col-md-12{% endif %}">
+        {{urllist(results, pagination)}}
+    </div>
+    {% if results %}
+    <div class="col-md-4">
+        <div class="list-group">
+            {{search_form()}}
+            {{exclude_form(endpoint="main.search_urls")}}
+            {{output_urls(outputs)}}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

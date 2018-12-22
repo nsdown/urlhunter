@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}捕获URL{% endblock %}
+
+{% block content %}
+    {{render_form(form)}}
+    <br>
+    <p>不会写正则？<a target="_blank" href="https://alphardex.github.io/2018/10/12/%E5%AD%A6%E4%B9%A0%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">点此学习</a></p>
+{% endblock %}

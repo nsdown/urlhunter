@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}自定义正则{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>自定义正则</h1>
+</div>
+{{render_form(form)}}
+{% endblock %}

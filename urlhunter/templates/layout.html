@@ -1,0 +1,96 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %} - {{config['SITE_NAME']}}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    {% block styles %}
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    {% endblock styles %}
+    {% endblock head %}
+</head>
+
+<body>
+    {% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="{{url_for('main.index')}}">
+                <img src="{{ url_for('static', filename='favicon.ico') }}" height="32" width="32">
+                &nbsp;{{ config['SITE_NAME'] }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="nav navbar-nav ml-auto">
+                    {{render_nav_item('main.show_help', '使用说明')}}
+                    {{render_nav_item('main.extract', '捕获URL')}}
+                    {{render_nav_item('main.show_urls', '我的URL')}}
+                    {{render_nav_item('main.show_regexs', '我的正则')}}
+                    {{render_nav_item('main.upload_regex', '自定义正则')}}
+                    {% if current_user.is_anonymous %}
+                    {{render_nav_item('auth.login', '登录')}}
+                    {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ current_user.avatar(22) }}">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <h6 class="dropdown-header">{{ current_user.username}}</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url_for('user.index', username=current_user.username) }}"><span
+                                    class="fa fa-user"></span>&nbsp;我的主页</a>
+                            <a class="dropdown-item" href="{{ url_for('auth.log_out') }}"><span class="fa fa-power-off"></span>&nbsp;登出</a>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endblock nav %}
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-dismissable alert-{{ category }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+        {% block footer %}
+        <footer>
+            <p class="float-left">
+                <small>&copy;
+                    Made by <a href="https://github.com/{{config['GITHUB_USERNAME']}}" target="_blank">{{config['GITHUB_USERNAME']}}</a>
+                    with <span class="fa fa-heart"></span>
+                </small>
+            </p>
+            <p class="float-right">
+                <small><a href="mailto:{{ config['EMAIL'] }}">Contact</a></small>
+            </p>
+        </footer>
+        {% endblock footer %}
+    </main>
+    {% block scripts %}
+    {{ bootstrap.load_js() }}
+    {{ moment.include_moment() }}
+    {{ moment.locale('zh-cn') }}
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+    {% endblock %}
+</body>
+
+</html>

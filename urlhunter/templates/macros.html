@@ -1,0 +1,113 @@
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% macro urllist(urls, pagination) %}
+{% if urls %}
+    <table class="table table-striped table-inverse table-responsive">
+        <thead class="thead-inverse">
+            <tr>
+                <th>URL</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for url in urls %}
+                <tr>
+                    <td scope="row"><a href="{{url.body}}" target="_blank">{{url.body|truncate(60)}}</a></td>
+                    <td>{{moment(url.timestamp).format('LLL')}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    {% if pagination and pagination.pages > 1 %}
+        {{render_pagination(pagination)}}
+    {% endif %}
+{% else %}
+    <div class="tip">还没有URL哦，快去<a href="{{url_for('main.extract')}}">捕获</a>它们吧！</div>
+{% endif %}
+{% endmacro %}
+
+{% macro regexlist(regexs, pagination) %}
+{% if regexs %}
+<ul class="list-group">
+    {% for regex in regexs %}
+    <li class="list-group-item">
+        {% set site = regex.site %}
+        {% set name = regex.name %}
+        {% set body = regex.body %}
+        <a type="button" class="btn btn-primary" href={{site}} target="_blank">{{name}}</a>&nbsp;&nbsp;
+        {{body}}
+        <span class="float-right">
+            <a class="btn btn-info" href="{{url_for('main.extract', urls=site, search=body, use_regex=True)}}">使用</a>
+            </div>
+    </li>
+    {% endfor %}
+</ul>
+{% if pagination and pagination.pages > 1 %}
+<div class="page-footer">
+{{render_pagination(pagination)}}
+</div>
+{% endif %}
+{% else %}
+<div class="tip">
+    你还没有自定义的正则，快去<a href="{{url_for('main.upload_regex')}}">定义</a>吧！
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro output_urls(outputs) %}
+{% if outputs %}
+<!-- Button trigger modal -->
+<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#outputModal">
+    一键导出URL
+</button>
+<!-- Output Modal -->
+<div class="modal fade" id="outputModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">尽情享用吧:D</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control" rows="10">{{outputs}}</textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro search_form() %}
+<form action="{{url_for('main.search_urls')}}" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" aria-label="url search" name="q" placeholder="查找URL" value="{{request.args.get('q', '')}}">
+        <div class="input-group-append">
+            <button type="submit" class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endmacro %}
+
+{% macro exclude_form(endpoint) %}
+<form action="{{url_for(endpoint)}}" method="get">
+    <div class="input-group">
+        {% if endpoint == 'main.search_urls' %}
+        <input type="text" name="q" value="{{request.args.get('q', '')}}" style="display: none;">
+        {% endif %}
+        <textarea class="form-control" name="exclude" rows="3" placeholder="想排除的字段，用英文逗号分隔">{{request.args.get('exclude', '')}}</textarea>
+        <div class="input-group-append">
+            <button type="submit" class="input-group-text">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endmacro %}

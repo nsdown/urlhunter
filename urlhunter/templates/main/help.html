@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}使用说明{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>使用说明</h1>
+</div>
+<h3>
+    <a href="{{url_for('main.extract')}}">捕获URL</a>
+</h3>
+<p>
+    有两个输入框，第一个用来输入你想捕获URL的网站来源（可以是多行URL），第二个则是你想搜索过滤的字符
+</p>
+<p>
+    如果想用正则表达式过滤URL，别忘了在<code>使用正则</code>那里打上勾，最后点击<code>提取</code>就可以了
+</p>
+<h3>
+    <a href="{{url_for('main.show_urls')}}">我的URL</a>
+</h3>
+<p>
+    这里展示着你捕获到的URL，上限是10000条，若超过上限则无法继续捕捉URL，需要点击右侧的<code>清空URL</code>
+</p>
+<p>
+    通过<code>查找URL</code>，你可以进一步查找到你想要的URL集合
+</p>
+<p>
+    最后，点击<code>一键导出URL</code>便可将你的URL以纯文本形式导出来，创建一个txt文件，将其复制粘贴进去就行了
+</p>
+<h3>
+    <a href="{{url_for('main.show_regexs')}}">我的正则</a>
+</h3>
+<p>
+    你可以在导航上点击<code>自定义正则</code>来上传自己的正则
+</p>
+<p>
+    点击右侧的<code>使用</code>就可以自动填充好捕获的内容了
+</p>
+{% endblock %}

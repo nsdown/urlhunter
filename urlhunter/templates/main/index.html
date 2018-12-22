@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}主页{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1 class="display-4">URL乃资源也。</h1>
+            <p class="lead">得URL者得天下。</p>
+            <p>
+                <a class="btn btn-primary btn-lg" role="button" href="{{url_for('main.extract')}}">开始狩猎</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title"><i class="fa fa-link"> 完美捕获</i></h2>
+                <p class="card-text">本站将会捕获所有用户输入的URL的网页中包含的每一个URL（图片、外链统统不放过）</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title"><i class="fa fa-filter"> 精准过滤</i></h2>
+                <p class="card-text">用户在捕获时可以用字符或者正则来过滤结果，并且能对结果进行搜索，找你想要的。</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title"><i class="fa fa-heart"> 一键导出</i></h2>
+                <p class="card-text">没错！只需轻轻一按，你的战利品就会被完整地展现出来，准备好Ctrl+C和Ctrl+V吧。</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
