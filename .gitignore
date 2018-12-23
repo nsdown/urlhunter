@@ -12,3 +12,4 @@ venv
 .vscode
 .coverage
 htmlcov/
+data-dev.db
