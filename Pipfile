@@ -17,6 +17,8 @@ requests = "*"
 boltons = "*"
 parsel = "*"
 more-itertools = "*"
+gunicorn = "*"
+"psycopg2" = "*"
 
 [dev-packages]
 coverage = "*"
