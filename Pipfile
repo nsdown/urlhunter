@@ -19,6 +19,7 @@ parsel = "*"
 more-itertools = "*"
 gunicorn = "*"
 "psycopg2" = "*"
+sentry-sdk = {extras = ["flask"], version = "*"}
 
 [dev-packages]
 coverage = "*"

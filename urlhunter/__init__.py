@@ -8,6 +8,8 @@ from urlhunter.models import db, User, Url, Regex
 from urlhunter.blueprints.auth import bp as auth_bp
 from urlhunter.blueprints.main import bp as main_bp
 from urlhunter.blueprints.user import bp as user_bp
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 
 def create_app(config_name=None):
@@ -22,6 +24,10 @@ def create_app(config_name=None):
     register_shell_context(app)
     register_errors(app)
     register_cli(app)
+
+    sentry_sdk.init(
+        dsn="https://bb3ec04a3a77464ab06ea8b9b3c26b6d@sentry.io/1359204",
+        integrations=[FlaskIntegration()])
 
     return app
 
